@@ -1,3 +1,4 @@
+using System;
 using Nancy;
 using Places.Objects;
 using System.Collections.Generic;
@@ -9,17 +10,24 @@ namespace Places
     public HomeModule()
     {
 
-      Get["/"] = _ => View["add_new_place.cshmtl"];
+      Get["/"] = _ => View["add_new_place.cshtml"];
+
+      Post["/place_added"] = _ => {
+        int intPopulation = int.Parse(Request.Form["new-population"]);
+        Place newPlace = new Place (Request.Form["new-place"], Request.Form["new-picture"], intPopulation);
+        newPlace.Save();
+        Console.WriteLine(newPlace.GetPopulation());
+        return View["place_added.cshtml", newPlace];
+      };
+
       Post["/show_instances"] = _ => {
-        Place newPlace = new Place (Request.Form["new-place"],Request.Form["new-picture"],Request.Form["new-population"]);
-        List<Place> instances = new List<Place>() {};
-        instances.Save(newPlace);
-        
-        return View["show_instances", instances];
+        List<Place> instances = Place.GetAll();
+        return View["/show_instances.cshtml", instances];
       };
       Post["/places_cleared"] = _ => {
-        instances.ClearAll();
-        return View["show_places", instances];
+        // List<Place> instances = Place.GetAll();
+        Place.ClearAll();
+        return View["show_places.cshtml"];
       };
 
 

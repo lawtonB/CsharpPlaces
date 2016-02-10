@@ -5,15 +5,17 @@ namespace Places.Objects
 {
   public class Place
   {
-    private string _cityName { get; set; }
-    private string _picture { get; set; }
-    private int _population { get; set; }
+    private string _cityName;
+    private string _picture;
+    private int _population;
 
-    private static List<string> _instances = new List<string> {};
+    private static List<Place> _instances = new List<Place> {};
 
     public Place (string cityName, string picture, int population)
     {
       _cityName = cityName;
+      _picture = picture;
+      _population = population;
     }
     public string GetCityName()
     {
@@ -23,10 +25,6 @@ namespace Places.Objects
     {
       _cityName = cityName;
     }
-    public Place (string picture)
-    {
-      _picture =  picture;
-    }
     public string GetPicture()
     {
       return _picture;
@@ -34,10 +32,6 @@ namespace Places.Objects
     public void SetPicture(string picture)
     {
       _picture = picture;
-    }
-    public Place (int population)
-    {
-      _population = population;
     }
     public int GetPopulation()
     {
@@ -47,7 +41,7 @@ namespace Places.Objects
     {
       _population = population;
     }
-    public static List<string> GetAll()
+    public static List<Place> GetAll()
     {
       return _instances;
     }
